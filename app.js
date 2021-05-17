@@ -4,15 +4,14 @@ const config = require('config');
 const bot = new Telegraf(config.telegram.key);
 
 bot.start(async (ctx) => {
-  ctx.reply('¡Bienvenid@ a SeVEx Bot. Este bot fue desarrollado por @franklinzerocr y solo se encarga de darle forward a los mensajes que contengan el #P2PLN al canal determinado en la configuracion del proyecto.\n\nEl repositorio publico del proyecto lo puedes encontrar en https://github.com/franklinzerocr/sevex_bot');
+  ctx.reply('Este bot te ayudará a completar tus intercambios P2P usando Bitcoin vía Lightning Network.\n\nEs fácil:\n\n1. Únete al grupo @satoshienvenezuela\n2. Publica tu oferta de compra o venta o calificación en el grupo, usando SIEMPRE el hashtag #P2PLN\n3. Tu oferta o calificación estará visible en el canal @SEVLIGHTNING\n\n¡Intercambia seguro y rápido!\n\nSupport: @franklinzerocr');
 });
 
-bot.hears('#P2PLN', (ctx) => {
-  ctx.forwardMessage(config.channel);
-});
-
-bot.hears('#p2pln', (ctx) => {
-  ctx.forwardMessage(config.channel);
+bot.on('text', (ctx) => {
+  if (ctx.update.message.text.toUpperCase().includes('#P2PLN')) {
+    console.log(ctx.update.message);
+    ctx.forwardMessage(config.channel);
+  }
 });
 
 bot.launch();
